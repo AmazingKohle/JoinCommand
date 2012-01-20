@@ -20,8 +20,15 @@ public class JoinCommandPlayerListener extends PlayerListener {
 		List<Object> stuff = plugin.getConfig().getList(listType);
         if(!(stuff == null)){
         	for (Object s : stuff) {
-        		player.performCommand((String) s); 
-        		//Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), (String) s);
+        		if(listType == "Commands-Console" | listType == "FirstCommand-Console") {
+        			//Need to replace a NewPlayer variable to the player's name, and cannot set (String) s, so a string called st is used.
+        			String st = (String) s.toString().replaceAll("PlayerName", player.getName());
+        			plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), st);
+        		}
+        		else if(listType == "Commands" | listType == "FirstCommand") {
+        			player.performCommand((String) s); 
+        		}
+        		//No else needed here, as nothing is done at this point. The statement is void, so returning has no point here.
         	}
         }
 	}
@@ -41,10 +48,14 @@ public class JoinCommandPlayerListener extends PlayerListener {
 
         	String listType = "FirstCommand";   //Call to get FirstCommands if its the players first time logging on
             filterCommand(player , listType);
+            listType = "FirstCommand-Console";  //Lazy method to call console-based FirstCommands
+            filterCommand(player , listType);
         	System.out.println( "[JoinCommand] " + name + " logged in for first time. " );
         }
         if(player.hasPermission("JoinCommand.NormalCommand")) {
     		String listType = "Commands";
+    		filterCommand(player , listType);
+    		listType = "Commands-Console";
     		filterCommand(player , listType);
         }
 
