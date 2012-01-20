@@ -27,7 +27,9 @@ public class JoinCommand extends JavaPlugin {
 		//Cut out having to use this.getConfig all the time final makes sure it doesn't get changed.
 		final FileConfiguration config = this.getConfig();
 		config.addDefault("Commands", Arrays.asList(list));
+		config.addDefault("Commands-Console", Arrays.asList(list));
 		config.addDefault("FirstCommand", Arrays.asList(list));
+		config.addDefault("FirstCommand-Console", Arrays.asList(list));
 		config.options().copyDefaults(true);
 		saveConfig(); 
 	}
@@ -86,7 +88,7 @@ public class JoinCommand extends JavaPlugin {
 			  saveConfig();
 		  }
 		  else{
-			  sender.sendMessage("Incorrect list name, enter either Commands or FirstCommand");
+			  sender.sendMessage("Incorrect list name, enter either Commands, FirstCommand, Commands-Console, or FirstCommand-Console");
 		  }
 
 	  }
