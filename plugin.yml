@@ -1,42 +1,11 @@
 name: JoinCommand
-main: com.worldofkrull.JoinCommand.JoinCommand
-version: 1.2j
-author: Kohle
-commands:
-    jc:
-        description: Debug the thing!
-        usage: |
-            /<command>
-    jc-reload:
-        description: Reloads config.
-        usage: |
-            /<command>
-    jc-addcommand:
-        description: Adds a command to config.
-        usage: |
-            /<command> [listType] [Command]
-    jc-ac:
-        description: Adds a command to config.
-        usage: |
-            /<command> [listType] [Command]
+main: co.kohle.JoinCommand.JoinCommand
+author: AmazingKohle
+version: 2
 permissions:
-    JoinCommand.*:
-        description: Gives access to all JoindCommand
-        children:
-            JoinCommand.reload: true
-            JoinCommand.FirstCommand: true
-            JoinCommand.NormalCommand: true
-            JoinCommand.addcommand: true
-        default: op
-    JoinCommand.reload:
-        description: Allows you to reload the config
-        default: op
-    JoinCommand.addcommand:
-        description: Allows you to reload the config
-        default: op
-    JoinCommand.FirstCommand:
-        description: Allows first time command to pass
-        default: not op
-    JoinCommand.NormalCommand:
-        description: Allows every logon command
-        default: not op
+  joincommand.every:
+    description: Gives permission for the every join commands to be executed for that player.
+    default: true
+  joincommand.first:
+    description: Gives permission for the first join commands to be executed for that player.
+    default: true
