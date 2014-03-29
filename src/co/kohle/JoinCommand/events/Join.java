@@ -19,7 +19,6 @@ package co.kohle.JoinCommand.events;
 
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -54,21 +53,27 @@ public class Join implements Listener {
 		Player player = event.getPlayer();
 		
 		if((!(player.hasPlayedBefore())) && player.hasPermission("joincommand.first")) {
-			player.getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + player.getName() + "has joined for the first time!");
-			
 			String listType = "first.player";
 			doCommands(player, listType);
 			
 			listType = "first.console";
 			doCommands(player, listType);
+			
+			if(plugin.getConfig().getBoolean("messages.first.enabled") == true) {
+				String message = plugin.getConfig().getString("messages.first.message").replaceAll("%player%", player.getName());
+				player.getServer().broadcastMessage(message);
+			}
 		} else if(player.hasPlayedBefore() && player.hasPermission("joincommand.every")) {
 			String listType = "every.player";
 			doCommands(player, listType);
 			
 			listType = "every.console";
 			doCommands(player, listType);
-			player.getServer().broadcastMessage("test");
-			plugin.getLogger().info("test");
+			
+			if(plugin.getConfig().getBoolean("messages.every.enabled") == true) {
+				String message = plugin.getConfig().getString("messages.every.message").replaceAll("%player%", player.getName());
+				player.getServer().broadcastMessage(message);
+			}
 		}
 	}
 

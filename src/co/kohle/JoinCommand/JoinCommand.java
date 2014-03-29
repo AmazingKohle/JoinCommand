@@ -45,6 +45,10 @@ public class JoinCommand extends JavaPlugin implements Listener {
 		config.addDefault("every.console", Arrays.asList(defaultCommands));
 		config.addDefault("first.player", Arrays.asList(defaultCommands));
 		config.addDefault("first.console", Arrays.asList(defaultCommands));
+		config.addDefault("messages.first.enabled", true);
+		config.addDefault("messages.first.message", "%player% has joined for the first time!");
+		config.addDefault("messages.every.enabled", false);
+		config.addDefault("messages.every.message", "Welcome back, %player%!");
 		config.options().copyDefaults(true);
 		this.saveConfig();
 	}

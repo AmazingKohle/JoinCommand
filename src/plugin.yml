@@ -1,7 +1,7 @@
 name: JoinCommand
 main: co.kohle.JoinCommand.JoinCommand
 author: AmazingKohle
-version: 2
+version: 2.1
 permissions:
   joincommand.every:
     description: Gives permission for the every join commands to be executed for that player.
