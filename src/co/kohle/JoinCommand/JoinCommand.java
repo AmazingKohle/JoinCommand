@@ -17,6 +17,7 @@
 
 package co.kohle.JoinCommand;
 
+import java.io.File;
 import java.util.Arrays;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,6 +34,19 @@ public class JoinCommand extends JavaPlugin implements Listener {
 		getLogger().info("Enabled!");
 		loadConfiguration();
 		getServer().getPluginManager().registerEvents(new Join(this), this);
+		
+		if(this.getConfig().getInt("players.unique.count") == 0) {
+			File f = new File(this.getConfig().getString("players.unique.world"));
+            int count = 0;
+            for (File file : f.listFiles()) {
+                    if (file.isFile()) {
+                            count++;
+                    }
+            }
+            System.out.println("Number of files: " + count);
+            this.getConfig().set("players.unique.count", count);
+            this.saveConfig();
+		}
 	}
 	
 	public void onDisable() {
@@ -49,6 +63,11 @@ public class JoinCommand extends JavaPlugin implements Listener {
 		config.addDefault("messages.first.message", "%player% has joined for the first time!");
 		config.addDefault("messages.every.enabled", false);
 		config.addDefault("messages.every.message", "Welcome back, %player%!");
+		config.addDefault("messages.unique.enabled", true);
+		config.addDefault("messages.unique.message", "%count% unique players have joined!");
+		config.addDefault("players.unique.enabled", true);
+		config.addDefault("players.unique.count", 0);
+		config.addDefault("players.unique.world", "C:/Server/world/players");
 		config.options().copyDefaults(true);
 		this.saveConfig();
 	}

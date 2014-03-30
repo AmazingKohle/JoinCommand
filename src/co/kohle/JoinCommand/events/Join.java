@@ -63,6 +63,22 @@ public class Join implements Listener {
 				String message = plugin.getConfig().getString("messages.first.message").replaceAll("%player%", player.getName());
 				player.getServer().broadcastMessage(message);
 			}
+			
+			if(plugin.getConfig().getBoolean("players.unique.enabled") == true) {
+				int oldCount = plugin.getConfig().getInt("players.unique.count");
+				int newCount = oldCount + 1;
+				String stringCount = String.valueOf(newCount);
+				
+				plugin.getConfig().set("players.unique.count", newCount);
+				plugin.saveConfig();
+				
+				if(!(player.hasPlayedBefore())) {
+					if(plugin.getConfig().getBoolean("messages.unique.enabled") == true) {
+						String message = plugin.getConfig().getString("messages.unique.message").replaceAll("%count%", stringCount);
+						player.getServer().broadcastMessage(message);
+					}
+				}
+			}
 		} else if(player.hasPlayedBefore() && player.hasPermission("joincommand.every")) {
 			String listType = "every.player";
 			doCommands(player, listType);
