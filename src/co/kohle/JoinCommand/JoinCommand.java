@@ -18,13 +18,16 @@
 package co.kohle.JoinCommand;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import co.kohle.JoinCommand.events.Join;
+import co.kohle.JoinCommand.metrics.Metrics;
 
 public class JoinCommand extends JavaPlugin implements Listener {
 	
@@ -39,13 +42,21 @@ public class JoinCommand extends JavaPlugin implements Listener {
 			File f = new File(this.getConfig().getString("players.unique.world"));
             int count = 0;
             for (File file : f.listFiles()) {
-                    if (file.isFile()) {
-                            count++;
-                    }
-            }
-            System.out.println("Number of files: " + count);
-            this.getConfig().set("players.unique.count", count);
-            this.saveConfig();
+			    if (file.isFile()) {
+			            count++;
+			    }
+			    
+			this.getConfig().set("players.unique.count", count);
+			this.saveConfig();
+			}
+		}
+		
+		try {
+		    Metrics metrics = new Metrics(this);
+		    metrics.start();
+		    getLogger().info("Reporting to Metrics...");
+		} catch (IOException e) {
+		    getLogger().log(Level.WARNING, "Could not submit metrics!");
 		}
 	}
 	
