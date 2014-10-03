@@ -1,7 +1,7 @@
 /*
  * This file is part of JoinCommand.
  *
- * Copyright (c) 2014 AmazingKohle (http://kohle.co)
+ * Copyright (c) 2014 Kohle (http://kohle.co)
  * JoinCommand is licensed under the Mozilla Public License 2.0.
  *
  * JoinCommand is free software: you can redistribute it and/or modify
