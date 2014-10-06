@@ -30,24 +30,24 @@ import co.kohle.JoinCommand.events.Join;
 import co.kohle.JoinCommand.metrics.Metrics;
 
 public class JoinCommand extends JavaPlugin implements Listener {
-	
-	String[] defaultCommands = {"version", "plugins"};
-	
+	private static final String[] defaultCommands = { "version", "plugins" };
+
+	@Override
 	public void onEnable() {
-		getLogger().info("Enabled!");
 		loadConfiguration();
+
 		getServer().getPluginManager().registerEvents(new Join(this), this);
 		
-		if(this.getConfig().getInt("players.unique.count") == 0) {
-			File f = new File(this.getConfig().getString("players.unique.world"));
-            int count = 0;
-            for (File file : f.listFiles()) {
-			    if (file.isFile()) {
-			            count++;
-			    }
+		if(getConfig().getInt("players.unique.count") == 0) {
+			File f = new File(getConfig().getString("players.unique.world"));
+			int count = 0;
+			for (File file : f.listFiles()) {
+				if (file.isFile()) {
+					count++;
+				}
 			    
-			this.getConfig().set("players.unique.count", count);
-			this.saveConfig();
+				getConfig().set("players.unique.count", count);
+				saveConfig();
 			}
 		}
 		
@@ -59,13 +59,9 @@ public class JoinCommand extends JavaPlugin implements Listener {
 		    getLogger().log(Level.WARNING, "Could not submit metrics!");
 		}
 	}
-	
-	public void onDisable() {
-		getLogger().info("Disabled!");
-	}
-	
+
 	public void loadConfiguration() {
-		final FileConfiguration config = this.getConfig();
+		final FileConfiguration config = getConfig();
 		config.addDefault("every.player", Arrays.asList(defaultCommands));
 		config.addDefault("every.console", Arrays.asList(defaultCommands));
 		config.addDefault("first.player", Arrays.asList(defaultCommands));
@@ -78,9 +74,10 @@ public class JoinCommand extends JavaPlugin implements Listener {
 		config.addDefault("messages.unique.message", "%count% unique players have joined!");
 		config.addDefault("players.unique.enabled", true);
 		config.addDefault("players.unique.count", 0);
-		config.addDefault("players.unique.world", "C:/Server/world/players");
+		config.addDefault("players.unique.world", "./world/players");
 		config.options().copyDefaults(true);
-		this.saveConfig();
+
+		saveConfig();
 	}
 	
 }
